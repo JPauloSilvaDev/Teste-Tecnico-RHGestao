@@ -1,0 +1,89 @@
+<div class="page-head">
+  <div class="page-head__text">
+    <h1 class="page-title">Novo Pedido</h1>
+    <p class="page-subtitle">Selecione o cliente e os produtos do pedido</p>
+  </div>
+  <a routerLink="/orders" class="btn-back">Voltar</a>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-card">
+  <div class="form-group">
+    <label for="clientId">Cliente</label>
+    <select id="clientId" formControlName="clientId">
+      <option value="">Selecione um cliente</option>
+      <option *ngFor="let c of customers" [value]="c.id">
+        {{ c.name }} ({{ c.email }})
+      </option>
+    </select>
+    <span class="error" *ngIf="form.get('clientId')?.touched && form.get('clientId')?.invalid">Cliente é obrigatório.</span>
+  </div>
+
+  <div class="form-group">
+    <label>Itens do pedido</label>
+    <div formArrayName="items" class="items-list">
+      <div class="item-row" *ngFor="let item of items.controls; let i = index" [formGroupName]="i">
+        <select formControlName="productId" class="item-row__product">
+          <option value="">Selecione um produto</option>
+          <option *ngFor="let p of products" [value]="p.id">
+            {{ p.name }} - R$ {{ p.price | number: '1.2-2' }}
+          </option>
+        </select>
+        <input
+          type="number"
+          formControlName="quantity"
+          min="1"
+          class="item-row__qty"
+          placeholder="Qtd"
+        />
+        <button type="button" class="btn-action btn-action--delete" title="Remover" (click)="removeItem(i)" *ngIf="items.length > 1">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        </button>
+      </div>
+
+      <div class="item-row item-row__details" *ngFor="let item of items.controls; let i = index">
+        <ng-container *ngIf="getProduct(item.get('productId')?.value) as selected">
+          <div class="item-row__summary">
+            <span class="item-row__meta">
+              Preço: <strong>R$ {{ selected.price | number: '1.2-2' }}</strong>
+            </span>
+            <span class="item-row__meta">
+              Estoque: <strong>{{ selected.quantityInStock }}</strong>
+            </span>
+            <span class="item-row__meta">
+              Subtotal:
+              <strong>
+                R$
+                {{
+                  (selected.price || 0) * (item.get('quantity')?.value || 0)
+                    | number: '1.2-2'
+                }}
+              </strong>
+            </span>
+          </div>
+          <span
+            class="error"
+            *ngIf="
+              item.get('quantity')?.value >
+              selected.quantityInStock
+            "
+          >
+            Quantidade maior que o estoque disponível.
+          </span>
+        </ng-container>
+      </div>
+    </div>
+    <button type="button" class="btn-secondary" (click)="addItem()">+ Adicionar produto</button>
+  </div>
+
+  <div class="order-total" *ngIf="items.length > 0">
+    <span>Total do pedido:</span>
+    <strong>R$ {{ total | number: '1.2-2' }}</strong>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn-primary" [disabled]="form.invalid || submitting">
+      {{ submitting ? 'Salvando...' : 'Salvar pedido' }}
+    </button>
+    <a routerLink="/orders" class="btn-cancel" [class.disabled]="submitting">Cancelar</a>
+  </div>
+</form>

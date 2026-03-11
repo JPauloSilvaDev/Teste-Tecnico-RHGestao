@@ -1,0 +1,75 @@
+.shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f5f5f5;
+  color: #111827;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.shell-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.shell-logo {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #ffffff;
+}
+
+.shell-header__spacer {
+  flex: 1 1 auto;
+}
+
+.shell-header__nav {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.nav-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.nav-tab.active {
+  font-weight: 600;
+}
+
+.shell-main {
+  flex: 1;
+  padding: 2rem 1.5rem 3rem;
+}
+
+.shell-card {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .shell-header {
+    padding-inline: 1rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .shell-header__nav {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .shell-card {
+    padding: 1.25rem;
+  }
+}

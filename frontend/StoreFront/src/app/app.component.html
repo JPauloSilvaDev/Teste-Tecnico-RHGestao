@@ -1,0 +1,46 @@
+<div class="shell">
+  <mat-toolbar color="primary" class="shell-header mat-elevation-z2">
+    <span class="shell-logo">Sistema de Gestão</span>
+    <span class="shell-header__spacer"></span>
+    <nav class="shell-header__nav">
+      <a
+        mat-button
+        routerLink="/products"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+        class="nav-tab"
+      >
+        <mat-icon>inventory_2</mat-icon>
+        Produtos
+      </a>
+      <a
+        mat-button
+        routerLink="/customers"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+        class="nav-tab"
+      >
+        <mat-icon>group</mat-icon>
+        Clientes
+      </a>
+      <a
+        mat-button
+        routerLink="/orders"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+        class="nav-tab"
+      >
+        <mat-icon>shopping_cart</mat-icon>
+        Pedidos
+      </a>
+    </nav>
+  </mat-toolbar>
+
+  <main class="shell-main">
+    <section class="shell-card">
+      <router-outlet />
+    </section>
+  </main>
+  <app-toast />
+  <app-confirm-dialog />
+</div>

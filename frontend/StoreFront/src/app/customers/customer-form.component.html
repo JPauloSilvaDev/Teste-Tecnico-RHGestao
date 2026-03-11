@@ -1,0 +1,27 @@
+<div class="page-head">
+  <div class="page-head__text">
+    <h1 class="page-title">{{ isEdit ? 'Editar cliente' : 'Novo Cliente' }}</h1>
+    <p class="page-subtitle">{{ isEdit ? 'Altere os dados do cliente' : 'Cadastre um novo cliente' }}</p>
+  </div>
+  <a routerLink="/customers" class="btn-back">Voltar</a>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-card">
+  <div class="form-group">
+    <label for="name">Nome</label>
+    <input id="name" type="text" formControlName="name" placeholder="Nome completo" />
+    <span class="error" *ngIf="form.get('name')?.touched && form.get('name')?.errors?.['required']">Obrigatório.</span>
+  </div>
+  <div class="form-group">
+    <label for="email">E-mail</label>
+    <input id="email" type="email" formControlName="email" placeholder="email@exemplo.com" />
+    <span class="error" *ngIf="form.get('email')?.touched && form.get('email')?.errors?.['required']">Obrigatório.</span>
+    <span class="error" *ngIf="form.get('email')?.touched && form.get('email')?.errors?.['email']">E-mail inválido.</span>
+  </div>
+  <div class="form-actions">
+    <button type="submit" class="btn-primary" [disabled]="form.invalid || submitting">
+      {{ submitting ? 'Salvando...' : (isEdit ? 'Salvar alterações' : 'Cadastrar cliente') }}
+    </button>
+    <a routerLink="/customers" class="btn-cancel" [class.disabled]="submitting">Cancelar</a>
+  </div>
+</form>

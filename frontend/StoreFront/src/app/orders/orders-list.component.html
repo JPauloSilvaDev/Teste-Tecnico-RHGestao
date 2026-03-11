@@ -1,0 +1,45 @@
+<div class="page-head">
+  <div class="page-head__text">
+    <h1 class="page-title">Pedidos</h1>
+    <p class="page-subtitle">Gerencie os pedidos da loja</p>
+  </div>
+  <a routerLink="/orders/new" class="btn-new">
+    <span class="btn-new__icon">+</span>
+    Novo Pedido
+  </a>
+</div>
+
+<div class="list-card">
+  <div class="list-card__header">
+    <h2 class="list-card__title">Lista de Pedidos</h2>
+    <p class="list-card__total">Total: {{ orders.length }} pedido{{ orders.length !== 1 ? 's' : '' }}</p>
+  </div>
+
+  <p *ngIf="loading" class="list-loading">Carregando pedidos...</p>
+
+  <div *ngIf="!loading && error" class="list-error">
+    <p>Falha ao carregar. Tente novamente.</p>
+    <button type="button" class="btn-retry" (click)="loadData()">Tentar novamente</button>
+  </div>
+
+  <table *ngIf="!loading && !error && orders.length > 0" class="data-table">
+    <thead>
+      <tr>
+        <th>Cliente</th>
+        <th>Data</th>
+        <th>Itens</th>
+        <th class="text-right">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders">
+        <td>{{ order.clientName }}</td>
+        <td>{{ order.orderDate | date: 'short' }}</td>
+        <td>{{ order.items.length || 0 }}</td>
+        <td class="text-right">R$ {{ order.totalValue | number: '1.2-2' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!loading && !error && orders.length === 0" class="list-empty">Nenhum pedido cadastrado ainda.</p>
+</div>
