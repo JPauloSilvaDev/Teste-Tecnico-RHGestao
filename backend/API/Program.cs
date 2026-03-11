@@ -20,7 +20,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog(Log.Logger, dispose: true);
 
-// Add services to the container.
+// Add services para o container.
 builder.Services.AddControllers();
 // Swagger / OpenAPI
 builder.Services.AddEndpointsApiExplorer();
@@ -78,7 +78,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext<ManagementSystemDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Dependency Injection - Repositories & Services
+// Injeção de Dependência - Repositories & Services
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
@@ -86,7 +86,7 @@ builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configurar a pipeline de HTTPRequest
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
