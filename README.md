@@ -1,4 +1,4 @@
-## Teste Técnico - Sistema de Gestão
+## CRUD - Sistema de Gestão com Angular no Front End
 
 Aplicação fullstack para gestão de **clientes**, **produtos** e **pedidos**, composta por:
 - **Backend**: API REST em ASP.NET Core 9 / EF Core / SQL Server.
